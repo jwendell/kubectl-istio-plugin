@@ -24,6 +24,10 @@
 #   go-tests = true
 #   unused-packages = true
 
+ignored = [
+  # Context Graph depends on a locally vendored library that isn't (yet) available upstream.
+  # "istio.io/istio/mixer/adapter/stackdriver/contextgraph",
+]
 
 [prune]
   go-tests = true
@@ -39,5 +43,24 @@
 
 [[constraint]]
   name = "istio.io/istio"
-  branch = "istioctl-pkg"
-  source = "https://github.com/jwendell/istio.git"
+  branch = "master"
+  #branch = "updated-openshift-istioctl-pkg"
+  #source = "https://github.com/jwendell/istio.git"
+
+# https://github.com/kubernetes/client-go#compatibility-matrix
+[[override]]
+  name = "k8s.io/client-go"
+  branch = "release-10.0" # kubernetes-1.13
+
+# matching client-go kubernetes-1.11.3's
+[[override]]
+  name = "github.com/Azure/go-autorest"
+  revision = "ea233b6412b0421a65dc6160e16c893364664a95"
+
+[[constraint]]
+  name = "github.com/spf13/cobra"
+  version = "0.0.2"
+
+[[override]]
+  name = "github.com/russross/blackfriday"
+  version = "v1.5.2"

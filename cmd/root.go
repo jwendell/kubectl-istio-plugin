@@ -15,23 +15,11 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
-	istioctl "istio.io/istio/istioctl/pkg/cmd"
+	istioctl "istio.io/istio/istioctl/cmd"
 )
 
 func getRootCmd(args []string) *cobra.Command {
 
-	rootCmd := &cobra.Command{
-		Use:   "xuxa",
-		Short: "Xuxo",
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Xuxa")
-		},
-	}
-
-	rootCmd.AddCommand(istioctl.GetRootCmd())
-
-	return rootCmd
+	return istioctl.GetRootCmd(args)
 }
