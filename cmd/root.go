@@ -21,5 +21,26 @@ import (
 
 func getRootCmd(args []string) *cobra.Command {
 
-	return istioctl.GetRootCmd(args)
+	rootCmd := &cobra.Command{
+		Use:               "istio",
+		Short:             "kubectl plugin to control Istio",
+		SilenceUsage:      true,
+		DisableAutoGenTag: true,
+		Long: `Istio configuration command line utility for service operators to
+debug and diagnose their Istio mesh.
+`,
+		//PersistentPreRunE: istioPersistentPreRunE,
+	}
+
+	rootCmd.SetArgs(args)
+	rootCmd.AddCommand(istioctl.GetRootCmd(args))
+
+	experimentalCmd := &cobra.Command{
+		Use:     "experimental",
+		Aliases: []string{"x", "exp"},
+		Short:   "Experimental commands that may be modified or deprecated",
+	}
+	rootCmd.AddCommand(experimentalCmd)
+
+	return rootCmd
 }
